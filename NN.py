@@ -1,0 +1,36 @@
+import numpy as np
+import math
+import Neuron as Neuron
+from Neuron import Neuron
+
+
+class NN:
+    def __init__(self):
+        self.structure = []
+
+    def getLayer(self, layer : int) -> []: #Layers are being counted from 0
+        return self.structure[layer]
+
+
+    def createLayer(self, inputsPerNeuron : int, amountOfNeurons : int, preset, activationFunction : str = "sigmoid"):
+        if preset:
+            self.structure.append(preset)
+            return
+        layer = []
+        for i in range(amountOfNeurons):
+            limit = np.sqrt(6 / (inputsPerNeuron + 1)) # xavier (glorot) inicialization
+            weights = np.random.uniform(-limit, limit, inputsPerNeuron)
+            neuron = Neuron.Neuron(weights, 0, activationFunction)
+            layer.append(neuron)
+        self.structure.append(layer)
+
+
+    def forward(self, data):
+        currData = data
+        newData = []
+        for layer in self.structure:
+            for neuron in layer:
+                newData.append(neuron.run(currData))
+            currData = newData
+            newData = []
+        return currData

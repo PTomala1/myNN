@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-class Token:
+class Neuron:
     def __init__(self, weights : [], bias : int, fun : str):
         self.weights = np.array(weights)
         self.bias = bias
@@ -26,7 +26,7 @@ class Token:
         )
 
     def __call__(self, x : []):
-        return self.forward(x)
+        return self.run(x)
 
     def sigmoid(self, Z):
         return 1 / (1 + math.exp(-Z))
@@ -34,7 +34,7 @@ class Token:
     def relu(self, Z):
         return np.maximum(0, Z)
 
-    def forward(self, inputs : []):
+    def run(self, inputs : []):
         inputs = np.array(inputs)
 
         if len(inputs) != len(self.weights):
