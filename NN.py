@@ -11,6 +11,8 @@ class NN:
     def getLayer(self, layer : int) -> []: #Layers are being counted from 0
         return self.structure[layer]
 
+    def setLayer(self, layer : int, neurons : []): #Layers are being counted from 0
+        self.structure[layer] = neurons
 
     def createLayer(self, inputsPerNeuron : int, amountOfNeurons : int, preset, activationFunction : str = "sigmoid"):
         if preset:
