@@ -1,7 +1,6 @@
 import numpy as np
 import math
 import Neuron as Neuron
-from Neuron import Neuron
 
 
 class NN:
