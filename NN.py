@@ -35,3 +35,18 @@ class NN:
             currData = newData
             newData = []
         return currData
+
+    def matixforward(self, data):
+        matrix = {0:data}
+        newData = []
+        i = 1
+        for layer in self.structure:
+            for neuron in layer:
+                newData.append(neuron.run(matrix[i - 1]))
+            matrix[i] = newData
+            newData = []
+            i += 1
+        matrix[1] = np.array(matrix[1])
+        matrix[2] = np.array(matrix[2])
+        matrix[3] = np.array(matrix[3])
+        return matrix

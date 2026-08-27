@@ -1,3 +1,4 @@
+import math
 from torch import FloatTensor
 from torchvision import datasets, transforms
 import numpy as np
@@ -15,13 +16,13 @@ def unsquize(matrix : []):
     return FloatTensor(r)
 
 def readNetwork(data : []):
-    vocab = {}
-    for f in data:
-        vocab[len(vocab)] = f
-    r = max(vocab.values(), key=vocab.keys())
-    print(vocab)
-    print(r)
-    # return vocab
+    return data.index(max(data))
+
+def cross_entropy(quess : {}):
+    label = readNetwork(quess)
+    probability = quess[label]
+    loss = -math.log(probability)
+    return loss
 
 network = nn.NN()
 network.createLayer(784, 128, None, "sigmoid")
@@ -34,6 +35,15 @@ for i in range(5):
         localImg = unsquize(localImg)
         localImg = unsquize(localImg)
         quess = network.forward(localImg)
-        print(readNetwork(quess))
+        loss = cross_entropy(quess)
+        Y = [0,0,0,0,0,0,0,0,0,0]
+        Y[localLabel] = 1
+        matrix = network.matixforward(localImg)
+        # print(matrix)
+
+        dZ3 = matrix[3] - Y
+        dB3 = dZ3
+        # dW3 = np.dot(dZ3, np.transpose(matrix[2]))
+        # print(dW3)
         break
     break
