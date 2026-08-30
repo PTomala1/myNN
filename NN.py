@@ -37,7 +37,7 @@ class NN:
         return currData
 
     def matixforward(self, data):
-        matrix = {0:data}
+        matrix = {0:np.array(data)}
         newData = []
         i = 1
         for layer in self.structure:
@@ -46,7 +46,6 @@ class NN:
             matrix[i] = newData
             newData = []
             i += 1
-        matrix[1] = np.array(matrix[1])
-        matrix[2] = np.array(matrix[2])
-        matrix[3] = np.array(matrix[3])
+        for i in range(3):
+            matrix[(i+1)] = np.array(matrix[(i+1)])
         return matrix

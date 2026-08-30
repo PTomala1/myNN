@@ -28,6 +28,20 @@ class Neuron:
     def __call__(self, x : []):
         return self.run(x)
 
+    #getters and setters, used in gradient descent
+
+    def getWeights(self):
+        return self.weights
+
+    def getBias(self):
+        return self.bias
+
+    def setWeights(self, weights : []):
+        self.weights = np.array(weights)
+
+    def setBias(self, bias : float):
+        self.bias = bias
+
     def sigmoid(self, Z):
         return 1 / (1 + math.exp(-Z))
 
