@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 class Neuron:
-    def __init__(self, weights : [], bias : int, fun : str):
+    def __init__(self, weights : list, bias : int, fun : str):
         self.weights = np.array(weights)
         self.bias = bias
         self.fun = fun
@@ -25,7 +25,7 @@ class Neuron:
                 and self.fun == other.fun
         )
 
-    def __call__(self, x : []):
+    def __call__(self, x : list):
         return self.run(x)
 
     #getters and setters, used in gradient descent
@@ -36,7 +36,7 @@ class Neuron:
     def getBias(self):
         return self.bias
 
-    def setWeights(self, weights : []):
+    def setWeights(self, weights : list):
         self.weights = np.array(weights)
 
     def setBias(self, bias : float):
@@ -48,7 +48,7 @@ class Neuron:
     def relu(self, Z):
         return np.maximum(0, Z)
 
-    def run(self, inputs : []):
+    def run(self, inputs : list) -> list:
         inputs = np.array(inputs)
 
         if len(inputs) != len(self.weights):

@@ -7,10 +7,10 @@ class NN:
     def __init__(self):
         self.structure = []
 
-    def getLayer(self, layer : int) -> []: #Layers are being counted from 0
+    def getLayer(self, layer : int) -> list: #Layers are being counted from 0
         return self.structure[layer]
 
-    def setLayer(self, layer : int, neurons : []): #Layers are being counted from 0
+    def setLayer(self, layer : int, neurons : list): #Layers are being counted from 0
         self.structure[layer] = neurons
 
     def createLayer(self, inputsPerNeuron : int, amountOfNeurons : int, preset, activationFunction : str = "sigmoid"):
@@ -25,6 +25,22 @@ class NN:
             layer.append(neuron)
         self.structure.append(layer)
 
+    def getBiases(self, layer : int) -> list:
+        return [neuron.getBias() for neuron in self.structure[layer]]
+
+    def getWeights(self, layer : int) -> list:
+        return [neuron.getWeights() for neuron in self.structure[layer]]
+
+    def getStructure(self):
+        return self.structure
+
+    def setWeights(self, layer : int, weights : list):
+        for neuron, weight in zip(self.structure[layer], weights):
+            neuron.setWeights(weight)
+
+    def setBiases(self, layer : int, biases : float):
+        for neuron, bias in zip(self.structure[layer], biases):
+            neuron.setBias(bias)
 
     def forward(self, data):
         currData = data
@@ -36,6 +52,7 @@ class NN:
             newData = []
         return currData
 
+    #Forwoard but returns outputs in hidden layers
     def matixforward(self, data):
         matrix = {0:np.array(data)}
         newData = []
@@ -49,3 +66,11 @@ class NN:
         for i in range(3):
             matrix[(i+1)] = np.array(matrix[(i+1)])
         return matrix
+
+    def update_weights(self, layer: int, dW, dB, learning_rate):
+        for i, neuron in enumerate(self.structure[layer]):
+            current_weights = neuron.getWeights()
+            neuron.setWeights(current_weights - learning_rate * dW[i])
+
+            current_bias = neuron.getBias()
+            neuron.setBias(current_bias - learning_rate * dB[i])
