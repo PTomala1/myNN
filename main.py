@@ -48,10 +48,30 @@ network.createLayer(784, 128, None, "sigmoid")
 network.createLayer(128, 64, None, "sigmoid")
 network.createLayer(64, 10, None, "sigmoid")
 
-loss = None
+def winLossRatio():
+
+    won = 0
+    for img, label in test:
+        img = unsquize(img)
+        img = unsquize(img)
+        quess = readNetwork(network.forward(img))
+        if (quess == label):
+            won += 1
+    return won/len(test)
+
+forPLT = [(x+1) for x in range(25)]
+
+def pltShow(X,Y):
+    plt.xlabel("Oś Epoka")
+    plt.ylabel("Oś % poprawności * 10")
+    plt.plot(X, Y)
+    plt.grid(True)
+    plt.show()
+
 #training
 learning_rate = 0.01
-for i in range(5):
+lossPerEpok = []
+for i in range(20):
     for curr_batch in batchs_train:
         dW3_total, dB3_total = 0, 0
         dW2_total, dB2_total = 0, 0
@@ -100,21 +120,15 @@ for i in range(5):
         network.update_weights(2, dW3_total, dB3_total, learning_rate)
         network.update_weights(1, dW2_total, dB2_total, learning_rate)
         network.update_weights(0, dW1_total, dB1_total, learning_rate)
+    lossPerEpok.append(winLossRatio() * 10)
+    pltShow(forPLT, lossPerEpok)
 
 
 
-lost = 0
-won = 0
-for img, label in test:
-    img = unsquize(img)
-    img = unsquize(img)
-    quess = readNetwork(network.forward(img))
-    if (quess == label):
-        won += 1
-    else:
-        lost += 1
 
-print(won, lost)
+
+
+
 
 
 # print(testLabel)
