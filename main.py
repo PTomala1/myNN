@@ -49,7 +49,6 @@ network.createLayer(128, 64, None, "sigmoid")
 network.createLayer(64, 10, None, "sigmoid")
 
 def winLossRatio():
-
     won = 0
     for img, label in test:
         img = unsquize(img)
@@ -59,7 +58,6 @@ def winLossRatio():
             won += 1
     return won/len(test)
 
-forPLT = [(x+1) for x in range(25)]
 
 def pltShow(X,Y):
     plt.xlabel("Oś Epoka")
@@ -121,6 +119,7 @@ for i in range(20):
         network.update_weights(1, dW2_total, dB2_total, learning_rate)
         network.update_weights(0, dW1_total, dB1_total, learning_rate)
     lossPerEpok.append(winLossRatio() * 10)
+    forPLT = [(x + 1) for x in range(i + 1)]
     pltShow(forPLT, lossPerEpok)
 
 
